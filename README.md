@@ -13,11 +13,13 @@ conan create . uranium/latest@sai/sai --build=missing --update
 cura
 -------------------------------------------------------------------------------------
 --dev--
+
 conan install . --build=missing --update -o cura:devtools=True -g VirtualPythonEnv
 
 
 
 --prod--
+
 conan create . cura/latest@sai/sai --build=missing --update
 
 conan install cura/latest@sai/sai --build=missing --update -if cura_inst -g VirtualPythonEnv -o cura:devtools=True --json "cura_inst/conan_install_info.json"
