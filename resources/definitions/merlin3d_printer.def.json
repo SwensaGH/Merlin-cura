@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name":  "Merlin Gantry Printer",
+    "name": "Merlin Gantry Printer",
     "inherits": "fdmprinter",
     "metadata":
     {
