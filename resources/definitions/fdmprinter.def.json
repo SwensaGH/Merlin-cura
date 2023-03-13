@@ -786,6 +786,19 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": false
                 },
+                "secondary_z_axis":
+                {
+                    "label": "Secondary Z Axis",
+                    "description": "The height of the initial layer in mm. A thicker initial layer makes adhesion to the build plate easier.",
+                    "unit": "mm",
+                    "type": "float",
+                    "default_value": 100.0,
+                    "minimum_value": "0.001",
+                    "minimum_value_warning": "0.1",
+                    "maximum_value_warning": "0.8 * min(extruderValues('machine_nozzle_size'))",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false
+                },
                 "line_width":
                 {
                     "label": "Line Width",

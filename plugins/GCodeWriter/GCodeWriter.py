@@ -69,6 +69,9 @@ class GCodeWriter(MeshWriter):
         :param mode: Additional information on how to format the g-code in the
             file. This must always be text mode.
         """
+        secondary_z_axis = Application.getInstance().getGlobalContainerStack().getProperty("secondary_z_axis", "value")
+        
+        
 
         if mode != MeshWriter.OutputMode.TextMode:
             Logger.log("e", "GCodeWriter does not support non-text mode.")
@@ -84,6 +87,7 @@ class GCodeWriter(MeshWriter):
         gcode_list = gcode_dict.get(active_build_plate, None)
         if gcode_list is not None:
             has_settings = False
+            stream.write(";secondary_z_axis:"+str(secondary_z_axis)+"\n")
             for gcode in gcode_list:
                 if gcode[:len(self._setting_keyword)] == self._setting_keyword:
                     has_settings = True
