@@ -70,9 +70,9 @@ class GCodeWriter(MeshWriter):
             file. This must always be text mode.
         """
         secondary_z_axis = Application.getInstance().getGlobalContainerStack().getProperty("secondary_z_axis", "value")
-        
-        
-
+        flow_rate=Application.getInstance().getGlobalContainerStack().getProperty("flow_rate", "value")
+        line_width=Application.getInstance().getGlobalContainerStack().getProperty("line_width", "value")
+        speed_print=Application.getInstance().getGlobalContainerStack().getProperty("speed_print", "value")
         if mode != MeshWriter.OutputMode.TextMode:
             Logger.log("e", "GCodeWriter does not support non-text mode.")
             self.setInformation(catalog.i18nc("@error:not supported", "GCodeWriter does not support non-text mode."))
@@ -88,6 +88,9 @@ class GCodeWriter(MeshWriter):
         if gcode_list is not None:
             has_settings = False
             stream.write(";secondary_z_axis:"+str(secondary_z_axis)+"\n")
+            stream.write(";line_width:"+str(line_width)+"\n")
+            stream.write(";speed_print:"+str(speed_print)+"\n")
+            stream.write(";flow_rate:"+str(flow_rate)+"\n")
             for gcode in gcode_list:
                 if gcode[:len(self._setting_keyword)] == self._setting_keyword:
                     has_settings = True

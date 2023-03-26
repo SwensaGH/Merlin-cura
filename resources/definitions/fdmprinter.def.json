@@ -1311,6 +1311,18 @@
                     "limit_to_extruder": "wall_0_extruder_nr",
                     "settable_per_mesh": true
                 },
+                "hole_xy_offset_max_diameter":
+                {
+                    "label": "Hole Horizontal Expansion Max Diameter",
+                    "description": "When greater than zero, the Hole Horizontal Expansion is gradually applied on small holes (small holes are expanded more). When set to zero the Hole Horizontal Expansion will be applied to all holes. Holes larger than the Hole Horizontal Expansion Max Diameter are not expanded.",
+                    "unit": "mm",
+                    "type": "float",
+                    "default_value": 0,
+                    "minimum_value": "0",
+                    "enabled": "hole_xy_offset > 0",
+                    "limit_to_extruder": "wall_0_extruder_nr",
+                    "settable_per_mesh": true
+                },
                 "z_seam_type":
                 {
                     "label": "Z Seam Alignment",
@@ -3257,6 +3269,20 @@
                             "settable_per_extruder": true
                         }
                     }
+                },
+                "flow_rate":
+                {
+                    "label": "Flow Rate",
+                    "description": "The speed at which travel moves are made.",
+                    "unit": "kg/s",
+                    "type": "float",
+                    "default_value": 0.04,
+                    "minimum_value": "0.01",
+                    "maximum_value": "10.5",
+                    "maximum_value_warning": "10.5",
+                    "value": "flow rate",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
                 },
                 "speed_travel":
                 {
@@ -5684,6 +5710,21 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
+                "skirt_height":
+                {
+                    "label": "Skirt Height",
+                    "description": "Printing the innermost skirt line with multiple layers makes it easy to remove the skirt.",
+                    "type": "int",
+                    "default_value": 3,
+                    "value": "3 if resolveOrValue('skirt_gap') > 0.0 else 1",
+                    "minimum_value": "1",
+                    "maximum_value_warning": "10",
+                    "maximum_value": "machine_height / layer_height",
+                    "enabled": "resolveOrValue('adhesion_type') == 'skirt'",
+                    "limit_to_extruder": "skirt_brim_extruder_nr",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                },
                 "skirt_gap":
                 {
                     "label": "Skirt Distance",
@@ -5793,6 +5834,17 @@
                     "limit_to_extruder": "skirt_brim_extruder_nr",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
+                },
+                "brim_smart_ordering":	
+                {	
+                    "label": "Smart Brim",	
+                    "description": "Swap print order of the innermost and second innermost brim lines. This improves brim removal.",	
+                    "type": "bool",	
+                    "enabled": "resolveOrValue('adhesion_type') == 'brim'",	
+                    "default_value": true,	
+                    "limit_to_extruder": "skirt_brim_extruder_nr",	
+                    "settable_per_mesh": false,	
+                    "settable_per_extruder": false	
                 },
                 "raft_margin":
                 {
@@ -6944,6 +6996,88 @@
                     "maximum_value_warning": "1.0",
                     "settable_per_mesh": true,
                     "settable_per_extruder": false
+                },
+                 "interlocking_enable":	
+                {	
+                    "label": "Generate Interlocking Structure",	
+                    "description": "At the locations where models touch, generate an interlocking beam structure. This improves the adhesion between models, especially models printed in different materials.",	
+                    "type": "bool",	
+                    "enabled": "extruders_enabled_count > 1",	
+                    "default_value": false,	
+                    "resolve": "(extruders_enabled_count > 1) and any(extruderValues('interlocking_enable'))",	
+                    "settable_per_mesh": false,	
+                    "settable_per_extruder": false	
+                },	
+                "interlocking_beam_width":	
+                {	
+                    "label": "Interlocking Beam Width",	
+                    "description": "The width of the interlocking structure beams.",	
+                    "type": "float",	
+                    "unit": "mm",	
+                    "enabled": "extruders_enabled_count > 1 and resolveOrValue('interlocking_enable')",	
+                    "default_value": 0.8,	
+                    "value": "2 * wall_line_width_0",	
+                    "minimum_value": "min_odd_wall_line_width",	
+                    "maximum_value": "min(0.5 * machine_width, 0.5 * machine_depth)",	
+                    "maximum_value_warning": "max(extruderValues('wall_line_width_0')) * 6",	
+                    "settable_per_mesh": true,	
+                    "settable_per_extruder": true	
+                },	
+                "interlocking_orientation":	
+                {	
+                    "label": "Interlocking Structure Orientation",	
+                    "description": "The height of the beams of the interlocking structure, measured in number of layers. Less layers is stronger, but more prone to defects.",	
+                    "unit": "\u00b0",	
+                    "type": "float",	
+                    "enabled": "extruders_enabled_count > 1 and resolveOrValue('interlocking_enable')",	
+                    "default_value": 22.5,	
+                    "minimum_value": "0",	
+                    "maximum_value": "360",	
+                    "resolve": "min(extruderValues('interlocking_orientation'))",	
+                    "settable_per_mesh": false,	
+                    "settable_per_extruder": false	
+                },	
+                "interlocking_beam_layer_count":	
+                {	
+                    "label": "Interlocking Beam Layer Count",	
+                    "description": "The height of the beams of the interlocking structure, measured in number of layers. Less layers is stronger, but more prone to defects.",	
+                    "type": "int",	
+                    "enabled": "extruders_enabled_count > 1 and resolveOrValue('interlocking_enable')",	
+                    "default_value": 2,	
+                    "minimum_value": "1",	
+                    "maximum_value_warning": "50",	
+                    "resolve": "max(extruderValues('interlocking_beam_layer_count'))",	
+                    "settable_per_mesh": false,	
+                    "settable_per_extruder": false	
+                },	
+                "interlocking_depth":	
+                {	
+                    "label": "Interlocking Depth",	
+                    "description": "The distance from the boundary between models to generate interlocking structure, measured in cells. Too few cells will result in poor adhesion.",	
+                    "type": "int",	
+                    "enabled": "extruders_enabled_count > 1 and resolveOrValue('interlocking_enable')",	
+                    "default_value": 2,	
+                    "minimum_value": "1",	
+                    "maximum_value": "10",	
+                    "maximum_value_warning": "5",	
+                    "resolve": "max(extruderValues('interlocking_depth'))",	
+                    "settable_per_mesh": false,	
+                    "settable_per_extruder": false	
+                },	
+                "interlocking_boundary_avoidance":	
+                {	
+                    "label": "Interlocking Boundary Avoidance",	
+                    "description": "The distance from the outside of a model where interlocking structures will not be generated, measured in cells.",	
+                    "type": "int",	
+                    "enabled": "extruders_enabled_count > 1 and resolveOrValue('interlocking_enable')",	
+                    "default_value": 2,	
+                    "minimum_value": "0",	
+                    "minimum_value_warning": "resolveOrValue('interlocking_depth')",	
+                    "maximum_value": "10",	
+                    "maximum_value_warning": "5",	
+                    "resolve": "max(extruderValues('interlocking_boundary_avoidance'))",	
+                    "settable_per_mesh": false,	
+                    "settable_per_extruder": false	
                 },
                 "support_skip_some_zags":
                 {
