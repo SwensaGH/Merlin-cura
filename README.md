@@ -27,6 +27,7 @@ git clone https://github.com/SwensaGH/Merlin-cura
 cd Cura
 ```
 ### For development 
+One time to setup Virtual Environment. You can delete venv directory and rerun to generate the venv directory
 ```sh
 conan install . --build=missing --update -o cura:devtools=True -g VirtualPythonEnv
 ```
