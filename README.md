@@ -41,6 +41,7 @@ py .\cura_inst\packaging\NSIS\create_windows_installer.py D:\ultimaker\Cura D:\u
 ```
 ## Run Cura
 ```sh
+venv\scripts\Activate.bat
 python cura_app.py
 ```
  
