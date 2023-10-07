@@ -1,6 +1,10 @@
 ![N|Solid](http://www.merlinautomationsolutions.com/images/merlin_l0g0_bk.png)
 
 # Building, Testing, Releasing
+delete ~/.conan
+delete c:\.conon
+delete ~/AppDir/local/Uranium*,cura*,Merlin*
+delete ~AppData\Roaming/Uranium*,cura*,Merlin*
 
 ## Install Conan
 ```sh
@@ -27,10 +31,10 @@ git clone https://github.com/SwensaGH/Merlin-cura
 cd Cura
 ```
 ### For development 
-One time to setup Virtual Environment. You can delete venv directory and rerun to generate the venv directory<br>
-update the following packages to 5.2.2 to 5.3.0 (to latest in the future ) - conandata.yml <br>
-Also make sure you have the requirements for building curaengine - https://github.com/Ultimaker/CuraEngine/wiki/Building-CuraEngine-From-Source<br>
-This step builds the curaengine.exe <br>
+One time to setup Virtual Environment. You can delete venv directory and rerun to generate the venv directory<br>   
+update the following packages to 5.2.2 to 5.3.0 (to latest in the future ) - conandata.yml <br>   
+Also make sure you have the requirements for building curaengine - https://github.com/Ultimaker/CuraEngine/wiki/Building-CuraEngine-From-Source<br>   
+This step builds the curaengine.exe <br>   
 ```sh
 conan install . --build=missing --update -o cura:devtools=True -g VirtualPythonEnv
 ```
