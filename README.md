@@ -27,10 +27,10 @@ git clone https://github.com/SwensaGH/Merlin-cura
 cd Cura
 ```
 ### For development 
-One time to setup Virtual Environment. You can delete venv directory and rerun to generate the venv directory
-update the following packages to 5.2.2 to 5.3.0 (to latest in the future ) - conandata.yml
-Also make sure you have the requirements for building curaengine - https://github.com/Ultimaker/CuraEngine/wiki/Building-CuraEngine-From-Source
-This step builds the curaengine.exe
+One time to setup Virtual Environment. You can delete venv directory and rerun to generate the venv directory<br>
+update the following packages to 5.2.2 to 5.3.0 (to latest in the future ) - conandata.yml <br>
+Also make sure you have the requirements for building curaengine - https://github.com/Ultimaker/CuraEngine/wiki/Building-CuraEngine-From-Source<br>
+This step builds the curaengine.exe <br>
 ```sh
 conan install . --build=missing --update -o cura:devtools=True -g VirtualPythonEnv
 ```
