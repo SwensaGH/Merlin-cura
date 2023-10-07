@@ -1,10 +1,12 @@
 ![N|Solid](http://www.merlinautomationsolutions.com/images/merlin_l0g0_bk.png)
 
 # Building, Testing, Releasing
-delete ~/.conan
+```sh
+delete ~/.conan 
 delete c:\.conon
 delete ~/AppDir/local/Uranium*,cura*,Merlin*
 delete ~AppData\Roaming/Uranium*,cura*,Merlin*
+```
 
 ## Install Conan
 ```sh
